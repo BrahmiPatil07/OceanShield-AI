@@ -1,4 +1,4 @@
-# OceanShield AI — Marine Intelligence & Satellite Oil Spill Investigation Platform
+# Ocean Shield — Marine Intelligence & Satellite Oil Spill Investigation Platform
 
 > **Smart India Hackathon (SIH) Prototype**  
 > *Satellite-Based Synthetic Aperture Radar (SAR) Oil Spill Detection and Spatio-Temporal AIS Vessel Correlation Engine*
@@ -7,7 +7,7 @@
 
 ## 🌊 Overview
 
-**OceanShield AI** is an operational marine intelligence platform engineered to detect maritime oil slicks from satellite synthetic aperture radar (SAR) imagery and perform retrospective spatio-temporal trajectory correlation against Automatic Identification System (AIS) vessel traffic to screen potentially associated vessels.
+**Ocean Shield** is an operational marine intelligence platform engineered to detect maritime oil slicks from satellite synthetic aperture radar (SAR) imagery and perform retrospective spatio-temporal trajectory correlation against Automatic Identification System (AIS) vessel traffic to screen potentially associated vessels.
 
 ---
 
@@ -107,4 +107,4 @@
 
 ## ⚖️ Legal & Ethical Notice
 
-*AIS correlation identifies spatio-temporal proximity only and does NOT constitute proof of responsibility or discharge. OceanShield AI is an operational screening and decision-support prototype. Final determinations require aerial surveillance, optical/chemical sampling, and Port State Control (PSC) inspections.*
+*AIS correlation identifies spatio-temporal proximity only and does NOT constitute proof of responsibility or discharge. Ocean Shield is an operational screening and decision-support prototype. Final determinations require aerial surveillance, optical/chemical sampling, and Port State Control (PSC) inspections.*

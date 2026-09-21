@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OceanShield AI | Satellite Oil Spill & AIS Vessel Correlation System</title>
+  <title>Ocean Shield | Satellite Oil Spill & AIS Vessel Correlation System</title>
   <meta name="description" content="Smart India Hackathon Prototype: Satellite-based synthetic aperture radar (SAR) oil spill detection and spatio-temporal AIS vessel correlation engine.">
   
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   
   <!-- GeoTIFF.js for client-side GeoTIFF raster parsing -->
-  <script src="https://unpkg.com/geotiff@2.1.3/dist-browser/geotiff.js"></script>
+  <script src="https://unpkg.com/geotiff@2.1.3/dist-browser/geotiff.js" defer></script>
 
   <!-- Custom Design System -->
   <link rel="stylesheet" href="style.css">
@@ -31,7 +31,7 @@
         </div>
         <div class="brand-text">
           <div class="system-badge">SIH PROTOTYPE • DEFENSE & ENVIRONMENT</div>
-          <h1>OceanShield <span>AI</span></h1>
+          <h1>Ocean Shield</h1>
           <p class="brand-tagline">
             <span>From Ocean Detection to Investigation Intelligence.</span>
           </p>
@@ -50,57 +50,37 @@
           <span class="pulsing-dot"></span>
           <span>PROTOTYPE DEMO • SYNTHETIC DATA</span>
         </div>
-        <button type="button" class="btn-reset-demo" id="btn-reset-demo" title="Restore default simulated dataset">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="1 4 1 10 7 10"></polyline>
-            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-          </svg>
-          Reset Demo
-        </button>
-        <button type="button" class="btn-upload-sat" id="btn-upload-satellite">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="2"></circle>
-            <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
-          </svg>
-          Upload Satellite Image
-        </button>
-        <input type="file" id="satellite-file-input" accept=".jpg,.jpeg,.png,.tif,.tiff" style="display: none;">
-        <button type="button" class="btn-sample-sat" id="btn-sample-satellite" title="Load high-resolution Sentinel-1 SAR sample image">
-          Sample SAR Image
-        </button>
-        <button type="button" class="btn-upload-ais" id="btn-upload-ais">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="17 8 12 3 7 8"></polyline>
-            <line x1="12" y1="3" x2="12" y2="15"></line>
-          </svg>
-          Upload AIS Data
-        </button>
-        <input type="file" id="ais-file-input" accept=".csv" style="display: none;">
-        <button type="button" class="btn-sample-csv" id="btn-sample-csv" title="Download realistic sample AIS CSV file">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          Sample CSV
-        </button>
-        <button type="button" class="btn-generate-report" id="btn-generate-report">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="16" y1="13" x2="8" y2="13"></line>
-            <line x1="16" y1="17" x2="8" y2="17"></line>
-            <polyline points="10 9 9 9 8 9"></polyline>
-          </svg>
-          Generate Investigation Report
-        </button>
-        <button id="run" type="button">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-          </svg>
-          Run demo analysis
-        </button>
+
+        <div class="top-action-bar">
+          <button type="button" class="btn-upload-sat" id="btn-upload-satellite" title="Upload custom SAR/optical raster (GeoTIFF, JPG, PNG, GIF)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <span>Upload Satellite Image</span>
+          </button>
+          <input type="file" id="satellite-file-input" accept=".jpg,.jpeg,.png,.tif,.tiff,.gif,image/*" style="display: none;">
+          <button type="button" class="btn-sample-sat" id="btn-sample-satellite" title="Load high-resolution Sentinel-1 SAR sample image">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span>Use Sample SAR Image</span>
+          </button>
+          <button type="button" class="btn-demo-start" id="btn-start-demo" title="Launch Interactive SIH 2026 Guided Demonstration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Start Demo</span>
+          </button>
+          <button type="button" class="btn-reset-demo" id="btn-reset-demo" title="Restore default simulated dataset">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            </svg>
+            <span>Reset Demo</span>
+          </button>
+        </div>
       </div>
     </header>
 
@@ -136,13 +116,6 @@
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
             How It Works
           </a>
-        </div>
-        <div class="nav-extra">
-          <button type="button" class="nav-reset-btn" id="btn-reset-demo-nav" title="Restore default simulated dataset">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
-            Reset Demo
-          </button>
-        </div>
       </div>
     </nav>
 
@@ -158,6 +131,143 @@
       <div class="disclaimer-text">
         <strong>Statutory Notice:</strong>
         This prototype uses simulated data. Correlation results are preliminary and do not establish legal responsibility. Ground truth verification and port state inspections are required.
+      </div>
+    </div>
+
+    <!-- End-to-End Pipeline Workflow Visualizer (SIH 2026 Presentation) -->
+    <div class="workflow-stepper-container" id="workflow-stepper">
+      <div class="workflow-stepper-header">
+        <div class="workflow-title-group">
+          <span class="workflow-badge">SIH 2026 PIPELINE</span>
+          <span class="workflow-title">Autonomous Multi-Sensor Intelligence Workflow</span>
+          <span class="badge prototype-badge">&#x26F6; PROTOTYPE DEMO</span>
+        </div>
+        <div class="workflow-header-actions">
+          <div class="workflow-status-tag" id="workflow-status-tag">
+            <span class="workflow-pulse"></span>
+            <span id="workflow-status-text">Step 1 of 6 &bull; Ingest Satellite SAR or Load Sample Raster</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6-Step Horizontal Interactive Cards Stepper -->
+      <div class="workflow-steps">
+        <div class="workflow-step active" id="wf-step-1" data-step="1" data-target="satellite-analysis-panel" role="button" tabindex="0" title="Step 1: Satellite Image Ingestion">
+          <div class="wf-step-top">
+            <div class="wf-step-number">01</div>
+            <span class="wf-step-status-tag" id="wf-status-1">ACTIVE</span>
+          </div>
+          <div class="wf-step-content">
+            <div class="wf-step-name">Satellite Image</div>
+            <div class="wf-step-desc">Sentinel-1 C-SAR / User Raster</div>
+          </div>
+        </div>
+
+        <div class="workflow-step" id="wf-step-2" data-step="2" data-target="satellite-analysis-panel" role="button" tabindex="0" title="Step 2: AI Spill Detection">
+          <div class="wf-step-top">
+            <div class="wf-step-number">02</div>
+            <span class="wf-step-status-tag" id="wf-status-2">PENDING</span>
+          </div>
+          <div class="wf-step-content">
+            <div class="wf-step-name">Spill Detection</div>
+            <div class="wf-step-desc">Adaptive CFAR &amp; Segmentation</div>
+          </div>
+        </div>
+
+        <div class="workflow-step" id="wf-step-3" data-step="3" data-target="map-panel" role="button" tabindex="0" title="Step 3: Geospatial Localization">
+          <div class="wf-step-top">
+            <div class="wf-step-number">03</div>
+            <span class="wf-step-status-tag" id="wf-status-3">PENDING</span>
+          </div>
+          <div class="wf-step-content">
+            <div class="wf-step-name">Location &amp; Map</div>
+            <div class="wf-step-desc">Centroid &amp; 12km Review Zone</div>
+          </div>
+        </div>
+
+        <div class="workflow-step" id="wf-step-4" data-step="4" data-target="drift-forecast-section" role="button" tabindex="0" title="Step 4: Hydrodynamic Drift Forecast">
+          <div class="wf-step-top">
+            <div class="wf-step-number">04</div>
+            <span class="wf-step-status-tag" id="wf-status-4">PENDING</span>
+          </div>
+          <div class="wf-step-content">
+            <div class="wf-step-name">Drift Forecast</div>
+            <div class="wf-step-desc">Metocean Trajectory (6h&ndash;48h)</div>
+          </div>
+        </div>
+
+        <div class="workflow-step" id="wf-step-5" data-step="5" data-target="vessels-panel" role="button" tabindex="0" title="Step 5: AIS Spatio-Temporal Correlation">
+          <div class="wf-step-top">
+            <div class="wf-step-number">05</div>
+            <span class="wf-step-status-tag" id="wf-status-5">PENDING</span>
+          </div>
+          <div class="wf-step-content">
+            <div class="wf-step-name">AIS Correlation</div>
+            <div class="wf-step-desc">Candidate Screening &amp; CPA</div>
+          </div>
+        </div>
+
+        <div class="workflow-step" id="wf-step-6" data-step="6" data-target="evidence-risk-section" role="button" tabindex="0" title="Step 6: Official Investigation SITREP Report">
+          <div class="wf-step-top">
+            <div class="wf-step-number">06</div>
+            <span class="wf-step-status-tag" id="wf-status-6">PENDING</span>
+          </div>
+          <div class="wf-step-content">
+            <div class="wf-step-name">Investigation Report</div>
+            <div class="wf-step-desc">Official Evidence SITREP</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dedicated Interactive Workflow Navigation Toolbar -->
+      <div class="demo-mode-toolbar" id="demo-mode-toolbar">
+        <div class="demo-toolbar-left">
+          <span class="demo-live-badge"><span class="pulsing-dot-teal"></span> WORKFLOW NAV</span>
+          <span class="demo-step-counter" id="demo-step-counter">Step 1 of 6: Satellite Image Ingestion</span>
+        </div>
+        <div class="demo-toolbar-center">
+          <button class="btn-demo-nav" id="btn-demo-prev" title="Previous Step (&larr;)" disabled>
+            &larr; Previous Step
+          </button>
+          <div class="demo-step-dots" id="demo-step-dots">
+            <span class="demo-dot active" data-step="1" title="Step 1: Satellite Image"></span>
+            <span class="demo-dot" data-step="2" title="Step 2: Spill Detection"></span>
+            <span class="demo-dot" data-step="3" title="Step 3: Spill Location"></span>
+            <span class="demo-dot" data-step="4" title="Step 4: Drift Forecast"></span>
+            <span class="demo-dot" data-step="5" title="Step 5: AIS Correlation"></span>
+            <span class="demo-dot" data-step="6" title="Step 6: Investigation Report"></span>
+          </div>
+          <button class="btn-demo-nav btn-demo-nav-primary" id="btn-demo-next" title="Next Step (&rarr;)">
+            Next Step &rarr;
+          </button>
+        </div>
+        <div class="demo-toolbar-right">
+          <button class="btn-demo-exit" id="btn-exit-demo" title="Reset to Step 1">
+            Reset Step ↺
+          </button>
+        </div>
+      </div>
+
+      <!-- Demo Step Explanation Card -->
+      <div class="demo-explanation-card" id="demo-explanation-card">
+        <div class="demo-exp-header">
+          <div class="demo-exp-title-group">
+            <span class="demo-exp-badge" id="demo-exp-badge">STEP 01</span>
+            <h3 class="demo-exp-title" id="demo-exp-title">Satellite Image Ingestion</h3>
+            <span class="badge prototype-badge">&#x26F6; PROTOTYPE DEMO</span>
+            <span class="badge-hv-inline" id="demo-exp-hv-badge" style="display: none;">⚠️ REQUIRES HUMAN VERIFICATION</span>
+          </div>
+          <div class="demo-exp-action-container" id="demo-exp-action-container">
+            <!-- Dynamic Action Button for current step -->
+          </div>
+        </div>
+        <p class="demo-exp-desc" id="demo-exp-desc">
+          Synthetic Aperture Radar (SAR) penetrates cloud cover and darkness to detect ocean surface roughness anomalies. Ocean Shield ingests high-resolution SAR rasters (GeoTIFF, JPG, PNG, GIF) to identify potential oil-slick dampening of capillary waves.
+        </p>
+        <div class="demo-exp-footer">
+          <span class="demo-exp-hint" id="demo-exp-hint">💡 Click "Next Step &rarr;" or click any step card above to advance.</span>
+          <span class="demo-exp-statutory">Statutory Notice: Synthetic data for demonstration purposes only. Non-accusatory candidate screening.</span>
+        </div>
       </div>
     </div>
 
@@ -246,6 +356,254 @@
         </div>
         <div class="stat-sub">
           <span id="stat-sys-sub" class="badge-accent">Dual-Pol SAR + AIS Fusion</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Satellite SAR Analysis & AI Segmentation Console -->
+    <div class="panel" id="satellite-analysis-panel">
+      <div class="panel-header">
+        <div>
+          <h2>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="2"></circle>
+              <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
+            </svg>
+            Satellite SAR Imagery & AI Slick Segmentation
+          </h2>
+          <span class="panel-subtitle">AUTONOMOUS CONV-RADAR DARK SLICK EXTRACTION</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <span class="badge badge-demo" id="sat-prototype-badge" style="background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; font-family: var(--font-mono);">PROTOTYPE SIMULATION</span>
+          <span class="badge badge-demo" id="sat-img-source" style="display: none; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; font-family: var(--font-mono);">SOURCE: DEMO SAMPLE</span>
+          <span class="panel-subtitle" id="sat-img-filename">NO SATELLITE IMAGE LOADED</span>
+        </div>
+      </div>
+
+      <!-- AI Analysis Action Toolbar -->
+      <div class="sat-action-toolbar">
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <button type="button" class="btn-detect-spill" id="btn-detect-spill">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="2" x2="12" y2="6"></line>
+              <line x1="12" y1="18" x2="12" y2="22"></line>
+              <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+              <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+              <line x1="2" y1="12" x2="6" y2="12"></line>
+              <line x1="18" y1="12" x2="22" y2="12"></line>
+              <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+              <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+            </svg>
+            <span>Detect Spill (Run AI Inference)</span>
+          </button>
+
+          <button type="button" class="btn-reset-analysis" id="btn-reset-analysis">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+            </svg>
+            <span>Reset Analysis</span>
+          </button>
+        </div>
+
+        </div>
+      </div>
+
+      <!-- 4-Stage Animated Analysis Pipeline -->
+      <div class="sat-pipeline-container" id="sat-analysis-pipeline">
+        <div class="sat-pipeline-header">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            <span class="sat-pipeline-title">Autonomous AI Detection Pipeline</span>
+          </div>
+          <span class="sat-pipeline-status" id="sat-pipeline-status">PIPELINE STANDBY • AWAITING IMAGE / TRIGGER</span>
+        </div>
+        <div class="sat-pipeline-grid">
+          <!-- Stage 1 -->
+          <div class="sat-pipeline-step" id="sat-step-1">
+            <div class="sat-step-badge">01</div>
+            <div class="sat-step-body">
+              <div class="sat-step-title">Image Processing</div>
+              <div class="sat-step-desc">Grayscale conversion & luminance profiling</div>
+              <div class="sat-step-tag" id="sat-tag-1">Ready</div>
+            </div>
+          </div>
+          <!-- Stage 2 -->
+          <div class="sat-pipeline-step" id="sat-step-2">
+            <div class="sat-step-badge">02</div>
+            <div class="sat-step-body">
+              <div class="sat-step-title">Slick Region Identification</div>
+              <div class="sat-step-desc">Adaptive thresholding & dark anomaly clustering</div>
+              <div class="sat-step-tag" id="sat-tag-2">Ready</div>
+            </div>
+          </div>
+          <!-- Stage 3 -->
+          <div class="sat-pipeline-step" id="sat-step-3">
+            <div class="sat-step-badge">03</div>
+            <div class="sat-step-body">
+              <div class="sat-step-title">Boundary Extraction</div>
+              <div class="sat-step-desc">Radial ray-tracing & multi-vertex contour</div>
+              <div class="sat-step-tag" id="sat-tag-3">Ready</div>
+            </div>
+          </div>
+          <!-- Stage 4 -->
+          <div class="sat-pipeline-step" id="sat-step-4">
+            <div class="sat-step-badge">04</div>
+            <div class="sat-step-body">
+              <div class="sat-step-title">Detection Completed</div>
+              <div class="sat-step-desc">Centroid, area estimation & geospatial sync</div>
+              <div class="sat-step-tag" id="sat-tag-4">Ready</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sat-panel-grid">
+        <!-- Interactive Viewport -->
+        <div class="sat-viewport-wrapper" id="sat-viewport">
+          <canvas id="sat-canvas"></canvas>
+
+          <div class="sat-empty-state" id="sat-empty-state">
+            <div class="sat-empty-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+            </div>
+            <div class="sat-empty-title">No Satellite Imagery Loaded</div>
+            <div class="sat-empty-sub">
+              Upload a Sentinel-1 SAR raster (.jpg, .png, .tif) or click <strong>Use Sample SAR Image</strong> in the top header.
+            </div>
+          </div>
+
+          <!-- Floating Zoom & Mask Controls -->
+          <div class="sat-floating-controls" id="sat-floating-controls" style="display: none;">
+            <div class="sat-btn-group">
+              <button type="button" class="sat-ctrl-btn" id="sat-zoom-in" title="Zoom In">+</button>
+              <span class="sat-zoom-label" id="sat-zoom-level">100%</span>
+              <button type="button" class="sat-ctrl-btn" id="sat-zoom-out" title="Zoom Out">−</button>
+              <button type="button" class="sat-ctrl-btn" id="sat-zoom-reset" title="Fit to Viewport">⟲</button>
+            </div>
+            <label class="sat-mask-toggle">
+              <input type="checkbox" id="sat-toggle-mask" checked>
+              <span>Show AI Segmentation Mask</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Telemetry Diagnostics Panel -->
+        <div class="sat-telemetry-container">
+          <div class="sat-status-card">
+            <div>
+              <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Inference Status</div>
+              <div style="font-weight: 700; color: var(--text-primary); font-size: 14px;" id="sat-status-text">Standby (Awaiting Image)</div>
+              <div class="sat-source-row" id="sat-source-row" style="margin-top: 6px; font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); display: flex; gap: 6px; align-items: center;">
+                <span>Source:</span>
+                <strong id="sat-source-name" style="color: #38bdf8;">--</strong>
+              </div>
+            </div>
+            <span class="sat-status-badge sat-status-waiting" id="sat-status-badge">STANDBY</span>
+          </div>
+
+          <!-- Metrics 3-Card Grid -->
+          <div class="sat-metric-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="sat-metric-card">
+              <div class="sat-metric-title">Estimated Area</div>
+              <div class="sat-metric-val">
+                <span id="sat-area-val">--</span>
+                <span class="sat-metric-unit">km²</span>
+              </div>
+              <div class="sat-metric-detail" id="sat-area-detail">Pixel Res: ~10m</div>
+            </div>
+
+            <div class="sat-metric-card">
+              <div class="sat-metric-title">Confidence</div>
+              <div class="sat-metric-val">
+                <span id="sat-conf-val">--</span>
+                <span class="sat-metric-unit">%</span>
+              </div>
+              <div class="sat-metric-detail" id="sat-conf-detail">VV/VH Dual-Pol</div>
+            </div>
+
+            <div class="sat-metric-card">
+              <div class="sat-metric-title">Processing Time</div>
+              <div class="sat-metric-val" style="color: var(--accent-cyan);">
+                <span id="sat-proc-time">--</span>
+                <span class="sat-metric-unit">ms</span>
+              </div>
+              <div class="sat-metric-detail">Client CFAR Engine</div>
+            </div>
+          </div>
+
+          <div class="sat-boundary-card">
+            <div class="sat-boundary-title">
+              <span>Slick Boundary Geometry</span>
+              <span id="sat-boundary-perimeter">Perimeter: --</span>
+            </div>
+            <div class="sat-boundary-list">
+              <div id="sat-centroid-readout">Centroid: [X: --, Y: --]</div>
+              <div id="sat-bbox-readout">Bounding Box: [W: --, H: --]</div>
+              <div id="sat-poly-vertices">Contour Points: -- vertices</div>
+            </div>
+          </div>
+
+          <div class="sat-demo-notice">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0;">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <div>
+              <strong>PROTOTYPE SIMULATION — NOT A VALIDATED AI PREDICTION:</strong>
+              The satellite detection overlay, slick boundary, and estimated area are simulated demonstration outputs for prototype evaluation. They do not represent an operationally validated AI prediction or legal evidence of responsibility.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Investigation Timeline -->
+    <div class="panel">
+      <div class="panel-header">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Investigation Chronological Timeline
+        </h2>
+        <span class="panel-subtitle">AUTOMATED MISSION LOG</span>
+      </div>
+
+      <div class="timeline-track" id="timeline-steps">
+        <div class="timeline-step completed">
+          <div class="step-node">01</div>
+          <div class="step-title">Sentinel-1 SAR Acquisition</div>
+          <div class="step-time" id="t-step-1">T-04:30 UTC</div>
+        </div>
+        <div class="timeline-step completed">
+          <div class="step-node">02</div>
+          <div class="step-title">Dark Slick Segmentation</div>
+          <div class="step-time" id="t-step-2">T-03:45 UTC</div>
+        </div>
+        <div class="timeline-step completed">
+          <div class="step-node">03</div>
+          <div class="step-title">Hydrodynamic Drift Modeling</div>
+          <div class="step-time" id="t-step-3">T-02:15 UTC</div>
+        </div>
+        <div class="timeline-step active">
+          <div class="step-node">04</div>
+          <div class="step-title">AIS Spatio-temporal Intersection</div>
+          <div class="step-time" id="t-step-4">T-01:00 UTC</div>
+        </div>
+        <div class="timeline-step">
+          <div class="step-node">05</div>
+          <div class="step-title">Coast Guard Alert Dossier</div>
+          <div class="step-time" id="t-step-5">T-00:10 UTC</div>
         </div>
       </div>
     </div>
@@ -387,6 +745,301 @@
         </div>
       </div>
     </section>
+
+    <!-- Oil Spill Drift Forecast Section -->
+    <section class="panel" id="drift-forecast-section">
+      <div class="drift-section-header">
+        <div>
+          <h2>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            Oil Spill Drift Forecast
+          </h2>
+          <span class="panel-subtitle">HYDRODYNAMIC TRAJECTORY & DISPERSION MODELING</span>
+        </div>
+        <div class="drift-demo-badge">
+          <span class="pulsing-dot" style="background-color: var(--accent-red); box-shadow: 0 0 10px var(--accent-red);"></span>
+          <span>SIMULATED DRIFT MODEL — DEMO</span>
+        </div>
+      </div>
+
+      <div class="drift-forecast-grid">
+        <!-- Dynamic Parameter Controls Box -->
+        <div class="drift-controls-box">
+          <!-- Parameter 1: Wind Direction -->
+          <div class="drift-param-group">
+            <div class="drift-param-header">
+              <label for="drift-wind-dir-slider" class="drift-param-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+                Wind Direction (Blowing From)
+              </label>
+              <span class="drift-ctrl-badge" id="drift-wind-dir-val">315° NW</span>
+            </div>
+            <input type="range" id="drift-wind-dir-slider" min="0" max="359" value="315" step="1" class="drift-range-slider">
+            <div class="drift-preset-pills">
+              <button type="button" class="drift-preset-btn active" data-type="wind-dir" data-val="315">NW 315°</button>
+              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="270">W 270°</button>
+              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="225">SW 225°</button>
+              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="180">S 180°</button>
+              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="135">SE 135°</button>
+              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="90">E 90°</button>
+              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="45">NE 45°</button>
+              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="0">N 0°</button>
+            </div>
+          </div>
+
+          <!-- Parameter 2: Wind Speed -->
+          <div class="drift-param-group">
+            <div class="drift-param-header">
+              <label for="drift-wind-spd-slider" class="drift-param-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
+                Wind Speed
+              </label>
+              <span class="drift-ctrl-badge" id="drift-wind-spd-val">14 kts</span>
+            </div>
+            <input type="range" id="drift-wind-spd-slider" min="0" max="45" value="14" step="1" class="drift-range-slider">
+          </div>
+
+          <!-- Parameter 3: Ocean Surface Current Direction & Speed -->
+          <div class="drift-param-group">
+            <div class="drift-param-header">
+              <label for="drift-curr-dir-slider" class="drift-param-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M17 5l5 7-5 7"/></svg>
+                Ocean Current Direction (Toward)
+              </label>
+              <span class="drift-ctrl-badge" id="drift-curr-dir-val">135° SE</span>
+            </div>
+            <input type="range" id="drift-curr-dir-slider" min="0" max="359" value="135" step="1" class="drift-range-slider">
+            <div class="drift-param-subrow" style="margin-top: 8px;">
+              <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">Current Speed:</span>
+              <span class="drift-ctrl-badge" id="drift-curr-spd-val" style="font-size: 11px; padding: 2px 6px;">0.8 kts</span>
+            </div>
+            <input type="range" id="drift-curr-spd-slider" min="0.1" max="3.0" value="0.8" step="0.1" class="drift-range-slider">
+          </div>
+
+          <!-- Forecast Horizon Selector (6h, 12h, 24h, 48h) -->
+          <div class="drift-param-group">
+            <label class="drift-param-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Select Forecast Horizon
+            </label>
+            <div class="drift-horizon-group">
+              <button type="button" class="drift-horizon-btn active" data-hours="6" id="horizon-6h">6 Hours</button>
+              <button type="button" class="drift-horizon-btn" data-hours="12" id="horizon-12h">12 Hours</button>
+              <button type="button" class="drift-horizon-btn" data-hours="24" id="horizon-24h">24 Hours</button>
+              <button type="button" class="drift-horizon-btn" data-hours="48" id="horizon-48h">48 Hours</button>
+            </div>
+          </div>
+
+          <!-- Action Button -->
+          <button type="button" class="btn-simulate-drift" id="btn-simulate-drift">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            Simulate Spill Drift on Map
+          </button>
+
+          <!-- MetOcean & Trajectory Telemetry Grid -->
+          <div class="drift-telemetry-grid">
+            <div class="drift-metric-card">
+              <div class="drift-metric-label">Initial Spill Location</div>
+              <div class="drift-metric-value" id="drift-initial-loc" style="font-size: 13.5px;">--</div>
+              <div class="drift-metric-sub" id="drift-initial-sub">Detected Centroid</div>
+            </div>
+
+            <div class="drift-metric-card">
+              <div class="drift-metric-label">Predicted Future Location</div>
+              <div class="drift-metric-value" id="drift-predicted-loc" style="font-size: 13.5px; color: var(--accent-amber);">--</div>
+              <div class="drift-metric-sub" id="drift-predicted-sub">At T+6h Horizon</div>
+            </div>
+
+            <div class="drift-metric-card">
+              <div class="drift-metric-label">Net Drift Vector</div>
+              <div class="drift-metric-value" id="drift-net-vector" style="font-size: 15px;">--</div>
+              <div class="drift-metric-sub" id="drift-net-sub">Surface Trajectory</div>
+            </div>
+
+            <div class="drift-metric-card">
+              <div class="drift-metric-label">Forecast Duration & Dist.</div>
+              <div class="drift-metric-value" id="drift-forecast-dist" style="font-size: 15px;">--</div>
+              <div class="drift-metric-sub" id="drift-forecast-duration">Horizon: 6 Hours</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Drift Forecast Timeline & Science Box -->
+        <div class="drift-timeline-box">
+          <div>
+            <div class="drift-timeline-title">
+              <span>Simulated Dispersion Timeline</span>
+              <span id="drift-active-horizon-label" style="color: var(--accent-amber);">Active: 6h Horizon</span>
+            </div>
+
+            <div class="drift-timeline-list">
+              <div class="drift-timeline-step" id="drift-step-0">
+                <div class="drift-step-node">T+0</div>
+                <div class="drift-step-content">
+                  <div class="drift-step-header">
+                    <span class="drift-step-name">Spill Centroid (Origin)</span>
+                    <span class="drift-step-dist" id="drift-dist-0">0.0 km</span>
+                  </div>
+                  <div class="drift-step-desc">Initial SAR dark slick observation. Zero displacement.</div>
+                </div>
+              </div>
+
+              <div class="drift-timeline-step active" id="drift-step-6">
+                <div class="drift-step-node">T+6</div>
+                <div class="drift-step-content">
+                  <div class="drift-step-header">
+                    <span class="drift-step-name">Near-Field Drift & Spreading</span>
+                    <span class="drift-step-dist" id="drift-dist-6">~15.6 km</span>
+                  </div>
+                  <div class="drift-step-desc">Initial hydrodynamic displacement. Natural evaporation & light spreading.</div>
+                </div>
+              </div>
+
+              <div class="drift-timeline-step" id="drift-step-12">
+                <div class="drift-step-node">T+12</div>
+                <div class="drift-step-content">
+                  <div class="drift-step-header">
+                    <span class="drift-step-name">Mid-Field Dispersion</span>
+                    <span class="drift-step-dist" id="drift-dist-12">~31.2 km</span>
+                  </div>
+                  <div class="drift-step-desc">Expanding uncertainty cone, emulsification, and windage transport.</div>
+                </div>
+              </div>
+
+              <div class="drift-timeline-step" id="drift-step-24">
+                <div class="drift-step-node">T+24</div>
+                <div class="drift-step-content">
+                  <div class="drift-step-header">
+                    <span class="drift-step-name">Far-Field Coastal Approach</span>
+                    <span class="drift-step-dist" id="drift-dist-24">~62.4 km</span>
+                  </div>
+                  <div class="drift-step-desc" id="drift-target-desc">Critical approach zone towards vulnerable coastal shoreline.</div>
+                </div>
+              </div>
+
+              <div class="drift-timeline-step" id="drift-step-48">
+                <div class="drift-step-node" style="border-color: #c084fc; color: #c084fc;">T+48</div>
+                <div class="drift-step-content">
+                  <div class="drift-step-header">
+                    <span class="drift-step-name">Extended Coastal Dispersion</span>
+                    <span class="drift-step-dist" id="drift-dist-48" style="color: #c084fc;">~124.8 km</span>
+                  </div>
+                  <div class="drift-step-desc">Maximum dispersion boundary; shoreline protection containment priority.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scientific Notice & Statutory Disclaimer -->
+          <div class="drift-science-box">
+            <div style="display: flex; align-items: flex-start; gap: 10px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; color: var(--accent-amber); margin-top: 2px;">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <div>
+                <strong>SIMULATED DRIFT MODEL — NOT A VALIDATED OCEANOGRAPHIC FORECAST:</strong>
+                This trajectory simulation calculates movement using simplified hydrodynamic vector integration (3% windage + surface ocean current). It is a prototype demonstration tool for competition review and NOT an operationally certified oceanographic forecast. Real-world incident management requires validated MetOcean models (e.g. NOAA GNOME / Copernicus CMEMS).
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Potentially Associated Vessels Panel -->
+    <div class="panel" id="vessels-panel">
+      <div class="panel-header">
+        <div>
+          <h2>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path>
+              <path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76"></path>
+              <line x1="12" y1="10" x2="12" y2="3"></line>
+            </svg>
+            Potentially Associated Vessels (AIS Spatio-Temporal Intersect)
+          </h2>
+          <span class="panel-subtitle">CANDIDATE SCREENING SHORTLIST</span>
+        </div>
+        <div class="vessels-panel-actions" style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+          <button type="button" class="btn-upload-ais" id="btn-upload-ais" title="Upload custom AIS CSV dataset">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            Upload AIS Data
+          </button>
+          <input type="file" id="ais-file-input" accept=".csv" style="display: none;">
+          <button type="button" class="btn-sample-csv" id="btn-sample-csv" title="Download realistic sample AIS CSV file">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Sample CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- Upload Ingestion Status Banner -->
+      <div class="upload-status-banner" id="upload-status-banner">
+        <div class="upload-status-meta">
+          <span class="upload-pill upload-pill-count" id="upload-count-pill">8 Uploaded Vessels</span>
+          <span class="upload-pill upload-pill-near" id="upload-near-pill">3 Near Spill Zone (&lt;25km)</span>
+          <span class="upload-pill upload-pill-prelim">PRELIMINARY EVALUATION</span>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);" id="upload-filename">
+          sample_ais_data.csv
+        </div>
+      </div>
+
+      <!-- Feed Source Toggle Tabs -->
+      <div class="ais-tab-group">
+        <button type="button" class="ais-tab-btn active" id="tab-simulated">
+          <span>Simulated Feed</span>
+          <span class="tab-badge" id="badge-simulated-count">5</span>
+        </button>
+        <button type="button" class="ais-tab-btn" id="tab-uploaded" style="display: none;">
+          <span>Uploaded AIS Feed</span>
+          <span class="tab-badge" id="badge-uploaded-count">0</span>
+          <span style="color: var(--accent-amber); font-size: 10px; font-weight: 700;">• PRELIMINARY</span>
+        </button>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Vessel Name & MMSI</th>
+              <th>Type</th>
+              <th>CPA Distance</th>
+              <th>Time Overlap</th>
+              <th>AIS Speed</th>
+              <th>Correlation Risk Score</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="rows">
+            <!-- Dynamically populated rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-footnote">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <span>Screening shortlist only—not proof of responsibility. Click any vessel row to highlight its historical track and closest point of approach (CPA) on the incident map.</span>
+      </div>
+    </div>
 
     <!-- Evidence & Risk Analysis Dashboard Section -->
     <section class="panel" id="evidence-risk-section">
@@ -684,548 +1337,6 @@
       </div>
     </section>
 
-    <!-- Oil Spill Drift Forecast Section -->
-    <section class="panel" id="drift-forecast-section">
-      <div class="drift-section-header">
-        <div>
-          <h2>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-            </svg>
-            Oil Spill Drift Forecast
-          </h2>
-          <span class="panel-subtitle">HYDRODYNAMIC TRAJECTORY & DISPERSION MODELING</span>
-        </div>
-        <div class="drift-demo-badge">
-          <span class="pulsing-dot" style="background-color: var(--accent-red); box-shadow: 0 0 10px var(--accent-red);"></span>
-          <span>SIMULATED DRIFT MODEL — DEMO</span>
-        </div>
-      </div>
-
-      <div class="drift-forecast-grid">
-        <!-- Dynamic Parameter Controls Box -->
-        <div class="drift-controls-box">
-          <!-- Parameter 1: Wind Direction -->
-          <div class="drift-param-group">
-            <div class="drift-param-header">
-              <label for="drift-wind-dir-slider" class="drift-param-label">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-                Wind Direction (Blowing From)
-              </label>
-              <span class="drift-ctrl-badge" id="drift-wind-dir-val">315° NW</span>
-            </div>
-            <input type="range" id="drift-wind-dir-slider" min="0" max="359" value="315" step="1" class="drift-range-slider">
-            <div class="drift-preset-pills">
-              <button type="button" class="drift-preset-btn active" data-type="wind-dir" data-val="315">NW 315°</button>
-              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="270">W 270°</button>
-              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="225">SW 225°</button>
-              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="180">S 180°</button>
-              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="135">SE 135°</button>
-              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="90">E 90°</button>
-              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="45">NE 45°</button>
-              <button type="button" class="drift-preset-btn" data-type="wind-dir" data-val="0">N 0°</button>
-            </div>
-          </div>
-
-          <!-- Parameter 2: Wind Speed -->
-          <div class="drift-param-group">
-            <div class="drift-param-header">
-              <label for="drift-wind-spd-slider" class="drift-param-label">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg>
-                Wind Speed
-              </label>
-              <span class="drift-ctrl-badge" id="drift-wind-spd-val">14 kts</span>
-            </div>
-            <input type="range" id="drift-wind-spd-slider" min="0" max="45" value="14" step="1" class="drift-range-slider">
-          </div>
-
-          <!-- Parameter 3: Ocean Surface Current Direction & Speed -->
-          <div class="drift-param-group">
-            <div class="drift-param-header">
-              <label for="drift-curr-dir-slider" class="drift-param-label">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M17 5l5 7-5 7"/></svg>
-                Ocean Current Direction (Toward)
-              </label>
-              <span class="drift-ctrl-badge" id="drift-curr-dir-val">135° SE</span>
-            </div>
-            <input type="range" id="drift-curr-dir-slider" min="0" max="359" value="135" step="1" class="drift-range-slider">
-            <div class="drift-param-subrow" style="margin-top: 8px;">
-              <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted);">Current Speed:</span>
-              <span class="drift-ctrl-badge" id="drift-curr-spd-val" style="font-size: 11px; padding: 2px 6px;">0.8 kts</span>
-            </div>
-            <input type="range" id="drift-curr-spd-slider" min="0.1" max="3.0" value="0.8" step="0.1" class="drift-range-slider">
-          </div>
-
-          <!-- Forecast Horizon Selector (6h, 12h, 24h, 48h) -->
-          <div class="drift-param-group">
-            <label class="drift-param-label">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              Select Forecast Horizon
-            </label>
-            <div class="drift-horizon-group">
-              <button type="button" class="drift-horizon-btn active" data-hours="6" id="horizon-6h">6 Hours</button>
-              <button type="button" class="drift-horizon-btn" data-hours="12" id="horizon-12h">12 Hours</button>
-              <button type="button" class="drift-horizon-btn" data-hours="24" id="horizon-24h">24 Hours</button>
-              <button type="button" class="drift-horizon-btn" data-hours="48" id="horizon-48h">48 Hours</button>
-            </div>
-          </div>
-
-          <!-- Action Button -->
-          <button type="button" class="btn-simulate-drift" id="btn-simulate-drift">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-            Simulate Spill Drift on Map
-          </button>
-
-          <!-- MetOcean & Trajectory Telemetry Grid -->
-          <div class="drift-telemetry-grid">
-            <div class="drift-metric-card">
-              <div class="drift-metric-label">Initial Spill Location</div>
-              <div class="drift-metric-value" id="drift-initial-loc" style="font-size: 13.5px;">--</div>
-              <div class="drift-metric-sub" id="drift-initial-sub">Detected Centroid</div>
-            </div>
-
-            <div class="drift-metric-card">
-              <div class="drift-metric-label">Predicted Future Location</div>
-              <div class="drift-metric-value" id="drift-predicted-loc" style="font-size: 13.5px; color: var(--accent-amber);">--</div>
-              <div class="drift-metric-sub" id="drift-predicted-sub">At T+6h Horizon</div>
-            </div>
-
-            <div class="drift-metric-card">
-              <div class="drift-metric-label">Net Drift Vector</div>
-              <div class="drift-metric-value" id="drift-net-vector" style="font-size: 15px;">--</div>
-              <div class="drift-metric-sub" id="drift-net-sub">Surface Trajectory</div>
-            </div>
-
-            <div class="drift-metric-card">
-              <div class="drift-metric-label">Forecast Duration & Dist.</div>
-              <div class="drift-metric-value" id="drift-forecast-dist" style="font-size: 15px;">--</div>
-              <div class="drift-metric-sub" id="drift-forecast-duration">Horizon: 6 Hours</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Drift Forecast Timeline & Science Box -->
-        <div class="drift-timeline-box">
-          <div>
-            <div class="drift-timeline-title">
-              <span>Simulated Dispersion Timeline</span>
-              <span id="drift-active-horizon-label" style="color: var(--accent-amber);">Active: 6h Horizon</span>
-            </div>
-
-            <div class="drift-timeline-list">
-              <div class="drift-timeline-step" id="drift-step-0">
-                <div class="drift-step-node">T+0</div>
-                <div class="drift-step-content">
-                  <div class="drift-step-header">
-                    <span class="drift-step-name">Spill Centroid (Origin)</span>
-                    <span class="drift-step-dist" id="drift-dist-0">0.0 km</span>
-                  </div>
-                  <div class="drift-step-desc">Initial SAR dark slick observation. Zero displacement.</div>
-                </div>
-              </div>
-
-              <div class="drift-timeline-step active" id="drift-step-6">
-                <div class="drift-step-node">T+6</div>
-                <div class="drift-step-content">
-                  <div class="drift-step-header">
-                    <span class="drift-step-name">Near-Field Drift & Spreading</span>
-                    <span class="drift-step-dist" id="drift-dist-6">~15.6 km</span>
-                  </div>
-                  <div class="drift-step-desc">Initial hydrodynamic displacement. Natural evaporation & light spreading.</div>
-                </div>
-              </div>
-
-              <div class="drift-timeline-step" id="drift-step-12">
-                <div class="drift-step-node">T+12</div>
-                <div class="drift-step-content">
-                  <div class="drift-step-header">
-                    <span class="drift-step-name">Mid-Field Dispersion</span>
-                    <span class="drift-step-dist" id="drift-dist-12">~31.2 km</span>
-                  </div>
-                  <div class="drift-step-desc">Expanding uncertainty cone, emulsification, and windage transport.</div>
-                </div>
-              </div>
-
-              <div class="drift-timeline-step" id="drift-step-24">
-                <div class="drift-step-node">T+24</div>
-                <div class="drift-step-content">
-                  <div class="drift-step-header">
-                    <span class="drift-step-name">Far-Field Coastal Approach</span>
-                    <span class="drift-step-dist" id="drift-dist-24">~62.4 km</span>
-                  </div>
-                  <div class="drift-step-desc" id="drift-target-desc">Critical approach zone towards vulnerable coastal shoreline.</div>
-                </div>
-              </div>
-
-              <div class="drift-timeline-step" id="drift-step-48">
-                <div class="drift-step-node" style="border-color: #c084fc; color: #c084fc;">T+48</div>
-                <div class="drift-step-content">
-                  <div class="drift-step-header">
-                    <span class="drift-step-name">Extended Coastal Dispersion</span>
-                    <span class="drift-step-dist" id="drift-dist-48" style="color: #c084fc;">~124.8 km</span>
-                  </div>
-                  <div class="drift-step-desc">Maximum dispersion boundary; shoreline protection containment priority.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Scientific Notice & Statutory Disclaimer -->
-          <div class="drift-science-box">
-            <div style="display: flex; align-items: flex-start; gap: 10px;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; color: var(--accent-amber); margin-top: 2px;">
-                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                <line x1="12" y1="9" x2="12" y2="13"></line>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-              </svg>
-              <div>
-                <strong>SIMULATED DRIFT MODEL — NOT A VALIDATED OCEANOGRAPHIC FORECAST:</strong>
-                This trajectory simulation calculates movement using simplified hydrodynamic vector integration (3% windage + surface ocean current). It is a prototype demonstration tool for competition review and NOT an operationally certified oceanographic forecast. Real-world incident management requires validated MetOcean models (e.g. NOAA GNOME / Copernicus CMEMS).
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Satellite SAR Analysis & AI Segmentation Console -->
-    <div class="panel" id="satellite-analysis-panel">
-      <div class="panel-header">
-        <div>
-          <h2>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="2"></circle>
-              <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
-            </svg>
-            Satellite SAR Imagery & AI Slick Segmentation
-          </h2>
-          <span class="panel-subtitle">AUTONOMOUS CONV-RADAR DARK SLICK EXTRACTION</span>
-        </div>
-        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-          <span class="badge badge-demo" id="sat-prototype-badge" style="background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.4); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; font-family: var(--font-mono);">PROTOTYPE SIMULATION</span>
-          <span class="badge badge-demo" id="sat-img-source" style="display: none; background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 4px; font-family: var(--font-mono);">SOURCE: DEMO SAMPLE</span>
-          <span class="panel-subtitle" id="sat-img-filename">NO SATELLITE IMAGE LOADED</span>
-        </div>
-      </div>
-
-      <!-- AI Analysis Action Toolbar -->
-      <div class="sat-action-toolbar">
-        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-          <button type="button" class="btn-detect-spill" id="btn-detect-spill">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="2" x2="12" y2="6"></line>
-              <line x1="12" y1="18" x2="12" y2="22"></line>
-              <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
-              <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
-              <line x1="2" y1="12" x2="6" y2="12"></line>
-              <line x1="18" y1="12" x2="22" y2="12"></line>
-              <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
-              <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
-            </svg>
-            <span>Detect Spill (Run AI Inference)</span>
-          </button>
-
-          <button type="button" class="btn-reset-analysis" id="btn-reset-analysis">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-              <path d="M3 3v5h5"></path>
-            </svg>
-            <span>Reset Analysis</span>
-          </button>
-        </div>
-
-        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-          <button type="button" class="sat-quick-btn" id="btn-upload-satellite-panel">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="17 8 12 3 7 8"></polyline>
-              <line x1="12" y1="3" x2="12" y2="15"></line>
-            </svg>
-            Upload Satellite Raster
-          </button>
-          <button type="button" class="sat-quick-btn" id="btn-sample-satellite-panel">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="12" cy="12" r="2"></circle>
-              <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path>
-            </svg>
-            Sample SAR Image
-          </button>
-        </div>
-      </div>
-
-      <!-- 4-Stage Animated Analysis Pipeline -->
-      <div class="sat-pipeline-container" id="sat-analysis-pipeline">
-        <div class="sat-pipeline-header">
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-            </svg>
-            <span class="sat-pipeline-title">Autonomous AI Detection Pipeline</span>
-          </div>
-          <span class="sat-pipeline-status" id="sat-pipeline-status">PIPELINE STANDBY • AWAITING IMAGE / TRIGGER</span>
-        </div>
-        <div class="sat-pipeline-grid">
-          <!-- Stage 1 -->
-          <div class="sat-pipeline-step" id="sat-step-1">
-            <div class="sat-step-badge">01</div>
-            <div class="sat-step-body">
-              <div class="sat-step-title">Image Processing</div>
-              <div class="sat-step-desc">Grayscale conversion & luminance profiling</div>
-              <div class="sat-step-tag" id="sat-tag-1">Ready</div>
-            </div>
-          </div>
-          <!-- Stage 2 -->
-          <div class="sat-pipeline-step" id="sat-step-2">
-            <div class="sat-step-badge">02</div>
-            <div class="sat-step-body">
-              <div class="sat-step-title">Slick Region Identification</div>
-              <div class="sat-step-desc">Adaptive thresholding & dark anomaly clustering</div>
-              <div class="sat-step-tag" id="sat-tag-2">Ready</div>
-            </div>
-          </div>
-          <!-- Stage 3 -->
-          <div class="sat-pipeline-step" id="sat-step-3">
-            <div class="sat-step-badge">03</div>
-            <div class="sat-step-body">
-              <div class="sat-step-title">Boundary Extraction</div>
-              <div class="sat-step-desc">Radial ray-tracing & multi-vertex contour</div>
-              <div class="sat-step-tag" id="sat-tag-3">Ready</div>
-            </div>
-          </div>
-          <!-- Stage 4 -->
-          <div class="sat-pipeline-step" id="sat-step-4">
-            <div class="sat-step-badge">04</div>
-            <div class="sat-step-body">
-              <div class="sat-step-title">Detection Completed</div>
-              <div class="sat-step-desc">Centroid, area estimation & geospatial sync</div>
-              <div class="sat-step-tag" id="sat-tag-4">Ready</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sat-panel-grid">
-        <!-- Interactive Viewport -->
-        <div class="sat-viewport-wrapper" id="sat-viewport">
-          <canvas id="sat-canvas"></canvas>
-
-          <div class="sat-empty-state" id="sat-empty-state">
-            <div class="sat-empty-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                <polyline points="21 15 16 10 5 21"></polyline>
-              </svg>
-            </div>
-            <div class="sat-empty-title">No Satellite Imagery Loaded</div>
-            <div class="sat-empty-sub">
-              Upload a Sentinel-1 SAR raster (.jpg, .png, .tif) or click <strong>Sample SAR Image</strong> to test simulated AI dark slick segmentation.
-            </div>
-            <button type="button" class="btn-sample-sat-inner" id="btn-sample-satellite-inner">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="2"></circle><path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"></path></svg>
-              Load Sample SAR Image (Demo)
-            </button>
-          </div>
-
-          <!-- Floating Zoom & Mask Controls -->
-          <div class="sat-floating-controls" id="sat-floating-controls" style="display: none;">
-            <div class="sat-btn-group">
-              <button type="button" class="sat-ctrl-btn" id="sat-zoom-in" title="Zoom In">+</button>
-              <span class="sat-zoom-label" id="sat-zoom-level">100%</span>
-              <button type="button" class="sat-ctrl-btn" id="sat-zoom-out" title="Zoom Out">−</button>
-              <button type="button" class="sat-ctrl-btn" id="sat-zoom-reset" title="Fit to Viewport">⟲</button>
-            </div>
-            <label class="sat-mask-toggle">
-              <input type="checkbox" id="sat-toggle-mask" checked>
-              <span>Show AI Segmentation Mask</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- Telemetry Diagnostics Panel -->
-        <div class="sat-telemetry-container">
-          <div class="sat-status-card">
-            <div>
-              <div style="font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Inference Status</div>
-              <div style="font-weight: 700; color: var(--text-primary); font-size: 14px;" id="sat-status-text">Standby (Awaiting Image)</div>
-              <div class="sat-source-row" id="sat-source-row" style="margin-top: 6px; font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); display: flex; gap: 6px; align-items: center;">
-                <span>Source:</span>
-                <strong id="sat-source-name" style="color: #38bdf8;">--</strong>
-              </div>
-            </div>
-            <span class="sat-status-badge sat-status-waiting" id="sat-status-badge">STANDBY</span>
-          </div>
-
-          <!-- Metrics 3-Card Grid -->
-          <div class="sat-metric-grid" style="grid-template-columns: repeat(3, 1fr);">
-            <div class="sat-metric-card">
-              <div class="sat-metric-title">Estimated Area</div>
-              <div class="sat-metric-val">
-                <span id="sat-area-val">--</span>
-                <span class="sat-metric-unit">km²</span>
-              </div>
-              <div class="sat-metric-detail" id="sat-area-detail">Pixel Res: ~10m</div>
-            </div>
-
-            <div class="sat-metric-card">
-              <div class="sat-metric-title">Confidence</div>
-              <div class="sat-metric-val">
-                <span id="sat-conf-val">--</span>
-                <span class="sat-metric-unit">%</span>
-              </div>
-              <div class="sat-metric-detail" id="sat-conf-detail">VV/VH Dual-Pol</div>
-            </div>
-
-            <div class="sat-metric-card">
-              <div class="sat-metric-title">Processing Time</div>
-              <div class="sat-metric-val" style="color: var(--accent-cyan);">
-                <span id="sat-proc-time">--</span>
-                <span class="sat-metric-unit">ms</span>
-              </div>
-              <div class="sat-metric-detail">Client CFAR Engine</div>
-            </div>
-          </div>
-
-          <div class="sat-boundary-card">
-            <div class="sat-boundary-title">
-              <span>Slick Boundary Geometry</span>
-              <span id="sat-boundary-perimeter">Perimeter: --</span>
-            </div>
-            <div class="sat-boundary-list">
-              <div id="sat-centroid-readout">Centroid: [X: --, Y: --]</div>
-              <div id="sat-bbox-readout">Bounding Box: [W: --, H: --]</div>
-              <div id="sat-poly-vertices">Contour Points: -- vertices</div>
-            </div>
-          </div>
-
-          <div class="sat-demo-notice">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0;">
-              <circle cx="12" cy="12" r="10"></circle>
-              <line x1="12" y1="8" x2="12" y2="12"></line>
-              <line x1="12" y1="16" x2="12.01" y2="16"></line>
-            </svg>
-            <div>
-              <strong>PROTOTYPE SIMULATION — NOT A VALIDATED AI PREDICTION:</strong>
-              The satellite detection overlay, slick boundary, and estimated area are simulated demonstration outputs for prototype evaluation. They do not represent an operationally validated AI prediction or legal evidence of responsibility.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Investigation Timeline -->
-    <div class="panel">
-      <div class="panel-header">
-        <h2>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <polyline points="12 6 12 12 16 14"></polyline>
-          </svg>
-          Investigation Chronological Timeline
-        </h2>
-        <span class="panel-subtitle">AUTOMATED MISSION LOG</span>
-      </div>
-
-      <div class="timeline-track" id="timeline-steps">
-        <div class="timeline-step completed">
-          <div class="step-node">01</div>
-          <div class="step-title">Sentinel-1 SAR Acquisition</div>
-          <div class="step-time" id="t-step-1">T-04:30 UTC</div>
-        </div>
-        <div class="timeline-step completed">
-          <div class="step-node">02</div>
-          <div class="step-title">Dark Slick Segmentation</div>
-          <div class="step-time" id="t-step-2">T-03:45 UTC</div>
-        </div>
-        <div class="timeline-step completed">
-          <div class="step-node">03</div>
-          <div class="step-title">Hydrodynamic Drift Modeling</div>
-          <div class="step-time" id="t-step-3">T-02:15 UTC</div>
-        </div>
-        <div class="timeline-step active">
-          <div class="step-node">04</div>
-          <div class="step-title">AIS Spatio-temporal Intersection</div>
-          <div class="step-time" id="t-step-4">T-01:00 UTC</div>
-        </div>
-        <div class="timeline-step">
-          <div class="step-node">05</div>
-          <div class="step-title">Coast Guard Alert Dossier</div>
-          <div class="step-time" id="t-step-5">T-00:10 UTC</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Potentially Associated Vessels Panel -->
-    <div class="panel" id="vessels-panel">
-      <div class="panel-header">
-        <h2>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"></path>
-            <path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76"></path>
-            <line x1="12" y1="10" x2="12" y2="3"></line>
-          </svg>
-          Potentially Associated Vessels (AIS Spatio-Temporal Intersect)
-        </h2>
-        <span class="panel-subtitle">CANDIDATE SCREENING SHORTLIST</span>
-      </div>
-
-      <!-- Upload Ingestion Status Banner -->
-      <div class="upload-status-banner" id="upload-status-banner">
-        <div class="upload-status-meta">
-          <span class="upload-pill upload-pill-count" id="upload-count-pill">8 Uploaded Vessels</span>
-          <span class="upload-pill upload-pill-near" id="upload-near-pill">3 Near Spill Zone (&lt;25km)</span>
-          <span class="upload-pill upload-pill-prelim">PRELIMINARY EVALUATION</span>
-        </div>
-        <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);" id="upload-filename">
-          sample_ais_data.csv
-        </div>
-      </div>
-
-      <!-- Feed Source Toggle Tabs -->
-      <div class="ais-tab-group">
-        <button type="button" class="ais-tab-btn active" id="tab-simulated">
-          <span>Simulated Feed</span>
-          <span class="tab-badge" id="badge-simulated-count">5</span>
-        </button>
-        <button type="button" class="ais-tab-btn" id="tab-uploaded" style="display: none;">
-          <span>Uploaded AIS Feed</span>
-          <span class="tab-badge" id="badge-uploaded-count">0</span>
-          <span style="color: var(--accent-amber); font-size: 10px; font-weight: 700;">• PRELIMINARY</span>
-        </button>
-      </div>
-
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Vessel Name & MMSI</th>
-              <th>Type</th>
-              <th>CPA Distance</th>
-              <th>Time Overlap</th>
-              <th>AIS Speed</th>
-              <th>Correlation Risk Score</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="rows">
-            <!-- Dynamically populated rows -->
-          </tbody>
-        </table>
-      </div>
-
-      <div class="table-footnote">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="16" x2="12" y2="12"></line>
-          <line x1="12" y1="8" x2="12.01" y2="8"></line>
-        </svg>
-        <span>Screening shortlist only—not proof of responsibility. Click any vessel row to highlight its historical track and closest point of approach (CPA) on the incident map.</span>
-      </div>
-    </div>
-
     <!-- How It Works Section -->
     <section class="panel" id="how-it-works-section">
       <div class="panel-header">
@@ -1331,7 +1442,7 @@
 
     <!-- Footer -->
     <footer>
-      <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">OceanShield AI • From Ocean Detection to Investigation Intelligence</div>
+      <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">Ocean Shield • From Ocean Detection to Investigation Intelligence</div>
       <div style="font-size: 11.5px; color: var(--text-muted); max-width: 800px; margin: 0 auto 12px; line-height: 1.5;">
         <strong>Statutory Disclaimer:</strong> This prototype uses simulated data. Correlation results are preliminary and do not establish legal responsibility.
       </div>
@@ -1368,7 +1479,7 @@
               <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
               <path d="M3 3v5h5"></path>
             </svg>
-            Generate / Refresh Report
+            Refresh Report
           </button>
           <button type="button" class="btn-print-report" id="btn-print-report" title="Print this investigation dossier">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
